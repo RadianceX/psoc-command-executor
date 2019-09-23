@@ -1,0 +1,15 @@
+CommandExecutor.cydsn/codegentemp/
+CommandExecutor.cydsn/CortexM0/
+CommandExecutor.cydsn/Export/
+CommandExecutor.cydsn/Generated_Source/
+CommandExecutor.cydsn/CommandExecutor.cycdx
+CommandExecutor.cydsn/CommandExecutor.cyfit
+CommandExecutor.cydsn/CommandExecutor.cyprj.Admin
+CommandExecutor.cydsn/CommandExecutor.rpt
+CommandExecutor.cydsn/CommandExecutor.svd
+CommandExecutor.cydsn/CommandExecutor_timing.html
+CommandExecutor.cydsn/CommandExecutor-000.cywrk
+CommandExecutor.cydsn/REBUILD.log
+CommandExecutor.cydsn/BUILD.log
+CommandExecutor.cydsn/CommandExecutor-000.cywrk.Admin
+*.Admin
