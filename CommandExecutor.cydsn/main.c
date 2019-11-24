@@ -9,18 +9,16 @@
  *
  * ========================================
 */
-#define False 0  
-#define True (!False)
-#define COMMAND_LEN 32
 
+
+#ifndef PROJECT_H
+#define PROJECT_H
 #include "project.h"
-
-#include <string.h>
-#include <stdlib.h>
-#include <stdarg.h>
-
+#endif /* project.h */
+#include "framework.h"
 
 CY_ISR_PROTO(UARTIsrHandler);
+
 
 // service block
 void __fill_command_tail(uint8 begin);  // заповнює кінець строки '\0'
@@ -29,6 +27,7 @@ void execute(char *command);            // передає аргументи у 
 void help(int is_show_help, char*);
 int random_int(int min, int max);
 void shuffle(int *array, size_t n);
+void main_loop(struct Context *context);
 
 // commands block
 void select_command(int is_show_help, char* arg0 );
@@ -38,10 +37,10 @@ void replace_cipher_encode(char* text);
 void homophonic_cipher_encode(char* text);
 
 // variables
-uint8 DEBUG_ENABLED = 0;
 char is_command_ready = False;
 char command[COMMAND_LEN];
 char cipher = '1';
+
 
 
 // Strongly recommended to follow this pattern
@@ -59,17 +58,20 @@ int main(void){
 
     help(1, NULL);
     UART_PutString("\r\n>");
-    
+    struct Context context = {'1', {0}};
+    main_loop(&context);
+}
+
+void main_loop(struct Context *context){
     for(;;)
     {
         if (is_command_ready == True)
         {
-            execute(command);
+            execute(context->command);
             is_command_ready = False;
         }
     }
 }
-
 void execute(char command[]){
     UART_PutString("\r\n");
     
@@ -80,20 +82,16 @@ void execute(char command[]){
     char *arg1 = strtok(NULL, " ");
     // char *arg2 = strtok(NULL, " ");
 
-    if (strcmp(cmd, "help") == 0)
-    {
+    if (strcmp(cmd, "help") == 0){
         help(0, arg0);
     }
-    else if (strcmp(cmd, "select") == 0)
-    {
+    else if (strcmp(cmd, "select") == 0){
         select_command(0, arg0);
     }  
-    else if (strcmp(cmd, "encrypt") == 0)
-    {
+    else if (strcmp(cmd, "encrypt") == 0){
         encrypt_command(0, arg0, arg1);
     }
-    else
-    {
+    else{
         print("Invalid command", NULL);
     }
     
