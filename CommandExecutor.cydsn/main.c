@@ -16,21 +16,16 @@
 #include "project.h"
 #endif /* project.h */
 #include "framework.h"
+#include "custom_commands.c"
 
 CY_ISR_PROTO(UARTIsrHandler);
 
-
 // service block
-void __fill_command_tail(uint8 begin);  // заповнює кінець строки '\0'
-void print(const char * arg1, ...);     // виводить текст через UART, останній аргумент обов'язково NULL!
-void execute(char *command);            // передає аргументи у вибрану функцію
-void help(int is_show_help, char*);
-int random_int(int min, int max);
-void shuffle(int *array, size_t n);
-void main_loop(struct Context *context);
+void execute(context *context);            // передає аргументи у вибрану функцію
+void help();
+void main_loop(context *context);
 
 // commands block
-void select_command(int is_show_help, char* arg0 );
 void encrypt_command(int is_show_help, char* text, char* cp_arg);
 void shift_cipher_encode(char*, char*);
 void replace_cipher_encode(char* text);
@@ -42,11 +37,10 @@ char command[COMMAND_LEN];
 char cipher = '1';
 
 
-
 // Strongly recommended to follow this pattern
 void function_name_command(int is_show_help, char* arg0, char* arg1, ...){
-    if (DEBUG_ENABLED)  { print("\r\nCALL function_name_command, args: ", arg0, ", ", arg1, NULL); }
-    if (is_show_help==1){ print("\r\ndetailed info about function", NULL); return; }
+    if (DEBUG_ENABLED)  { PRINT("\r\nCALL function_name_command, args: ", arg0, ", ", arg1); }
+    if (is_show_help==1){ PRINT("\r\ndetailed info about function"); return; }
 
     /* Function code */
 }
@@ -56,75 +50,58 @@ int main(void){
     UART_Start();
     isr_UART_StartEx(UARTIsrHandler);
 
-    help(1, NULL);
+    help();
     UART_PutString("\r\n>");
-    struct Context context = {'1', {0}};
-    main_loop(&context);
-}
-
-void main_loop(struct Context *context){
+    context context = {'1', {0}};
     for(;;)
     {
         if (is_command_ready == True)
         {
-            execute(context->command);
+            execute(&context);
             is_command_ready = False;
         }
     }
+    main_loop(&context);
 }
-void execute(char command[]){
+
+void execute(context* context){
     UART_PutString("\r\n");
     
     char tmp[COMMAND_LEN];
-    strcpy(tmp, command);
+    strcpy(tmp, context->command);
     char *cmd = strtok(tmp, " ");
     char *arg0 = strtok(NULL, " ");
     char *arg1 = strtok(NULL, " ");
     // char *arg2 = strtok(NULL, " ");
 
     if (strcmp(cmd, "help") == 0){
-        help(0, arg0);
+        help();
     }
     else if (strcmp(cmd, "select") == 0){
-        select_command(0, arg0);
-    }  
+        select_command(0, context, arg0);
+    }
     else if (strcmp(cmd, "encrypt") == 0){
         encrypt_command(0, arg0, arg1);
     }
     else{
-        print("Invalid command", NULL);
+        PRINT("Invalid command");
     }
     
     UART_PutString("\r\n>");
 }
 
-void help(int is_show_help, char* function){
-    if (DEBUG_ENABLED){ print("CALL help_command, args: ", function, NULL); }
+void help(void){
+    if (DEBUG_ENABLED){ 
+        print("CALL help_command, args: "); 
+    }
     
-    print("\r\n Available commands:", NULL);
-    select_command(1,NULL);
+    PRINT("\r\n Available commands:");
+    select_command(1, NULL, NULL);
     encrypt_command(1, NULL, NULL);
 }
 
-void select_command(int is_show_help, char* arg0){
-    if (DEBUG_ENABLED)  { print("CALL select_command, arg:", arg0, NULL);      }
-    if (is_show_help==1){ 
-        print(
-            "\r\n select (uint)cp_num                           - select cipher",
-            "\r\n cp_num:                                       - cipher type",
-            "\r\n    1 - shift cipher ; cp_args: (int)shift",
-            "\r\n    2 - replace cipher; cp_args: none",
-            "\r\n    3 - homophonic replacement cipher; cp_args: none",
-            NULL
-        ); 
-    return; 
-    }
-    
-    cipher = *arg0;
-}
-
 void encrypt_command(int is_show_help, char* text, char* cp_arg){
-    if (DEBUG_ENABLED)  { print("\r\nCALL encrypt_command args: ", text, ", ", cp_arg, NULL); }
+    if (DEBUG_ENABLED)  { PRINT("\r\nCALL encrypt_command args: ", text, ", ", cp_arg); }
     if (is_show_help==1){ 
         print(
             "\r\n encrypt (string)text (args)cp_args            - encrypt text by selected cipher",
@@ -147,13 +124,13 @@ void encrypt_command(int is_show_help, char* text, char* cp_arg){
             break;
         }
         default:{
-            print("invalid cipher", NULL);
+            PRINT("invalid cipher");
         }
     }
 }
 
 void shift_cipher_encode(char* text, char * shift_text){
-    if (DEBUG_ENABLED){ print("\r\nCALL shift_cipher_encode, args:", text,", ", shift_text, NULL); }
+    if (DEBUG_ENABLED){ PRINT("\r\nCALL shift_cipher_encode, args:", text,", ", shift_text); }
     
     int len = strlen(text);
 
@@ -198,11 +175,11 @@ void shift_cipher_encode(char* text, char * shift_text){
         }
     }
     
-    print(text, NULL);
+    PRINT(text);
 }
 
 void replace_cipher_encode(char* text){
-    if (DEBUG_ENABLED){ print("\r\nCALL replace_cipher_encode, args:", text, NULL); }
+    if (DEBUG_ENABLED){ PRINT("\r\nCALL replace_cipher_encode, args:", text); }
     char c_alphabet[] = {
         'r', 's', 'A', '7', 'g', 'p', 'U', 'S', 'c',
         'D', 'y', 'n', 'T', '4', 'u', 'w', 'X', 'd', 'e', 
@@ -228,11 +205,11 @@ void replace_cipher_encode(char* text){
             text[i] = c_alphabet[(int)value];
         }
     }
-    print(text, NULL);
+    PRINT(text);
 }
 
 void homophonic_cipher_encode(char* text){
-    if (DEBUG_ENABLED)  { print("\r\nCALL homophonic_cipher_encode, args: ", text, NULL); }
+    if (DEBUG_ENABLED)  { PRINT("\r\nCALL homophonic_cipher_encode, args: ", text); }
 
     uint16 i;
     int encrypted_text[COMMAND_LEN];
@@ -285,7 +262,7 @@ CY_ISR(UARTIsrHandler){
     if (command[data_count] == '\r') 
     {
         is_command_ready = True;
-        __fill_command_tail(data_count);
+        fill_buffer_tail(data_count);
         data_count = 0;
     }
     else if (command[data_count] == '\b'){
@@ -328,7 +305,7 @@ int random_int(int min, int max){
 }
 
 void __fill_command_tail(uint8 start_position){
-    if (DEBUG_ENABLED){ print("\r\nCALL __fill_command_tail, args:", start_position, NULL); }
+    if (DEBUG_ENABLED){ PRINT("\r\nCALL __fill_command_tail, args:", start_position); }
     uint8 i;
     for (i=start_position; i<COMMAND_LEN; i++)
     {
@@ -336,20 +313,5 @@ void __fill_command_tail(uint8 start_position){
     }
 }
 
-void print( const char * arg1, ... ){
-    va_list args;
-    const char * message;
-    va_start( args, arg1 );
-    
-    UART_PutString(arg1);
-
-    message = va_arg( args, const char * );
-    while( message ) {
-        UART_PutString(message);
-        message = va_arg( args, const char *);
-    }
-    
-    va_end( args );
-}
 
 /* [] END OF FILE */

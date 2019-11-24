@@ -9,6 +9,10 @@
  *
  * ========================================
 */
+#include <string.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
 #ifndef PROJECT_H
 #define PROJECT_H
 #include "project.h"
@@ -17,18 +21,17 @@
 #define True (!False)
 #define COMMAND_LEN 32
 
-#include <string.h>
-#include <stdlib.h>
-#include <stdarg.h>
+#define print(...) __print(__VA_ARGS__, 0)
 
-uint8 DEBUG_ENABLED = 0;
-struct Context{
+typedef struct {
     char cipher;
     char command[COMMAND_LEN];
-};
+} context;
 
-void print( const char * arg1, ... );
-char* fill_command_tail(char* buffer, uint16 start_position);
+void __print( const char* begin, ... );
+void fill_buffer_tail(char* buffer, size_t buffer_len, uint16 start_position);
 void shuffle(int *buffer, size_t lenght);
+
+uint8 DEBUG_ENABLED = 0;
 
 /* [] END OF FILE */

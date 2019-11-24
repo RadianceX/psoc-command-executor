@@ -11,10 +11,10 @@
 */
 #include "framework.h"
 
-void select_command(int is_show_help, struct Context *context, char* arg0){
-    if (DEBUG_ENABLED)  { print("CALL select_command, arg:", arg0, NULL);      }
+void select_command(int is_show_help, context *context, char* arg0){
+    if (DEBUG_ENABLED)  { PRINT("CALL select_command, arg:", arg0);      }
     if (is_show_help==1){ 
-        print(
+        PRINT(
             "\r\n select (uint)cp_num                           - select cipher",
             "\r\n cp_num:                                       - cipher type",
             "\r\n    1 - shift cipher ; cp_args: (int)shift",
@@ -22,9 +22,8 @@ void select_command(int is_show_help, struct Context *context, char* arg0){
             "\r\n    3 - homophonic replacement cipher; cp_args: none",
             NULL
         ); 
-    return; 
+    return;
     }
-    
     context->cipher = *arg0;
 }
 

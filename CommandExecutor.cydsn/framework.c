@@ -11,34 +11,30 @@
 */
 #include "framework.h"
 
-void print( const char * arg1, ... ){
+void __print(const char* begin, ... ){
     va_list args;
-    const char * message;
-    va_start( args, arg1 );
+    const char* message;
+    va_start(args, begin);
     
-    UART_PutString(arg1);
+    UART_PutString(begin);
 
-    message = va_arg( args, const char * );
-    while( message ) {
+    message = va_arg(args, const char*);
+    while(message) {
         UART_PutString(message);
-        message = va_arg( args, const char *);
+        message = va_arg(args, const char*);
     }
-    
-    va_end( args );
+    va_end(args);
 }
 
-char* fill_command_tail(char* buffer, uint16 start_position){
-    // Fills in buffer values from start position to end by '\0'
-    if (DEBUG_ENABLED){ print("\r\nCALL __fill_command_tail, args:", start_position, NULL); }
-    uint8 i;
-    for (i=start_position; i<COMMAND_LEN; i++)
-    {
+void fill_buffer_tail(char* buffer, size_t buffer_len, uint16 start_position){
+    // Fills in buffer values from start position to the end by '\0' character
+    uint16 i;
+    for (i=start_position; i<buffer_len; i++){
         buffer[i] = '\0';
     }
-    return buffer;
 }
 
-int random_int(int min, int max){
+int randint(int min, int max){
     // Return random value in range from min to max
     return min + rand() % (max+1 - min);
 }
