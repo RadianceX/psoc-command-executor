@@ -18,13 +18,13 @@ void playfair(char ch1, char ch2, char key[MX][MX]) {
     if (w == y) {
         x = (x + 1) % 5;
         z = (z + 1) % 5;
-        PRINT(&key[w][x], key[y][z], NULL);
+        print(&key[w][x], key[y][z]);
     } else if (x == z) {
         w = (w + 1) % 5;
         y = (y + 1) % 5;
-        print(&key[w][x], key[y][z], NULL);
+        print(&key[w][x], key[y][z]);
     } else {
-        print(&key[w][z], key[y][x], NULL);  
+        print(&key[w][z], key[y][x]);  
     } 
 }
 void plahfair_cipher_encode(char* message, char* _key) {

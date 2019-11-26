@@ -11,7 +11,7 @@
 */
 #include "framework.h"
 
-void __print(const char* begin, ... ){
+void fprint(const char* begin, ... ){
     va_list args;
     const char* message;
     va_start(args, begin);
