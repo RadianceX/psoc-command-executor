@@ -15,10 +15,18 @@
 #define PROJECT_H
 #include "project.h"
 #endif /* project.h */
+#ifndef FRAMEWORK_H
+#define FRAMEWORK_H
 #include "framework.h"
-#include "custom_commands.c"
-
-DEBUG_ENABLED = 0;
+#endif /* framework.h */
+#ifndef CUSTOM_COMMANDS_H
+#define CUSTOM_COMMANDS_H
+#include "custom_commands.h"
+#endif /* custom_commands.h */
+#ifndef CIPHER_H
+#define CIPHER_H
+#include "cipher.h"
+#endif /* cipher.h */
 
 CY_ISR_PROTO(UARTIsrHandler);
 

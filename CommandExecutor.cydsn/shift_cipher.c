@@ -9,7 +9,14 @@
  *
  * ========================================
 */
+#ifndef FRAMEWORK_H
+#define FRAMEWORK_H
 #include "framework.h"
+#endif /* framework.h */
+#ifndef CIPHER_H
+#define CIPHER_H
+#include "cipher.h"
+#endif /* cipher.h */
 
 void shift_cipher_encode(char* text, char * shift_text){
     if (DEBUG_ENABLED){ print("\r\nCALL shift_cipher_encode, args:", text,", ", shift_text); }

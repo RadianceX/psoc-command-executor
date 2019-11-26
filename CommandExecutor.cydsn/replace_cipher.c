@@ -9,8 +9,14 @@
  *
  * ========================================
 */
+#ifndef FRAMEWORK_H
+#define FRAMEWORK_H
 #include "framework.h"
-
+#endif /* framework.h */
+#ifndef CIPHER_H
+#define CIPHER_H
+#include "cipher.h"
+#endif /* cipher.h */
 void replace_cipher_encode(char* text){
     if (DEBUG_ENABLED){ print("\r\nCALL replace_cipher_encode, args:", text); }
     char c_alphabet[] = {

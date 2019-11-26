@@ -35,6 +35,6 @@ void fill_buffer_tail(char* buffer, size_t buffer_len, uint16 start_position);
 void shuffle(int *buffer, size_t lenght);
 int randint(int min, int max);
 
-uint8 DEBUG_ENABLED;
+uint8 DEBUG_ENABLED = 0;
 
 /* [] END OF FILE */

@@ -9,7 +9,10 @@
  *
  * ========================================
 */
+#ifndef FRAMEWORK_H
+#define FRAMEWORK_H
 #include "framework.h"
+#endif /* framework.h */
 
 void fprint(const char* begin, ... ){
     va_list args;

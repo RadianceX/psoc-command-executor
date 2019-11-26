@@ -1,10 +1,16 @@
+#ifndef FRAMEWORK_H
+#define FRAMEWORK_H
 #include "framework.h"
-#define MX 5
+#endif /* framework.h */
+#ifndef CIPHER_H
+#define CIPHER_H
+#include "cipher.h"
+#endif /* cipher.h */
 
-void playfair(char ch1, char ch2, char key[MX][MX]) {
+void playfair(char ch1, char ch2, char key[5][5]){
     int i, j, w, x, y, z;
-    for (i = 0; i < MX; i++) {
-        for (j = 0; j < MX; j++) {
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 5; j++) {
             if (ch1 == key[i][j]) {
                 w = i;
                 x = j;
@@ -29,7 +35,7 @@ void playfair(char ch1, char ch2, char key[MX][MX]) {
 }
 void plahfair_cipher_encode(char* message, char* _key) {
     uint8 i, j, k = 0, m = 0, n;
-    char key[MX][MX], keyminus[25], keystr[10], str[25] = {
+    char key[5][5], keyminus[25], keystr[10], str[25] = {
         0
     };
     char alpa[26] = {
@@ -109,8 +115,8 @@ void plahfair_cipher_encode(char* message, char* _key) {
     }
     //construct key keymatrix
     k = 0;
-    for (i = 0; i < MX; i++) {
-        for (j = 0; j < MX; j++) {
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 5; j++) {
             if (k < n) {
                 key[i][j] = keystr[k];
                 k++;

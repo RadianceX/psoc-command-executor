@@ -9,7 +9,15 @@
  *
  * ========================================
 */
+#ifndef FRAMEWORK_H
+#define FRAMEWORK_H
 #include "framework.h"
+#endif /* framework.h */
+
+#ifndef CIPHER_H
+#define CIPHER_H
+#include "cipher.h"
+#endif /* cipher.h */
 
 void homophonic_cipher_encode(char* text){
     if (DEBUG_ENABLED)  { print("\r\nCALL homophonic_cipher_encode, args: ", text); }

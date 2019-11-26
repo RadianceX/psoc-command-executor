@@ -9,7 +9,18 @@
  *
  * ========================================
 */
+#ifndef FRAMEWORK_H
+#define FRAMEWORK_H
 #include "framework.h"
+#endif /* framework.h */
+#ifndef CUSTOM_COMMANDS_H
+#define CUSTOM_COMMANDS_H
+#include "custom_commands.h"
+#endif /* custom_commands.h */
+#ifndef CIPHER_H
+#define CIPHER_H
+#include "cipher.h"
+#endif /* cipher.h */
 
 void select_command(int is_show_help, context_table *context, char* arg0){
     if (DEBUG_ENABLED)  { 

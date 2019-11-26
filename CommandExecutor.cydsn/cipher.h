@@ -14,7 +14,9 @@
 #include "framework.h"
 #endif /* framework.h */
 
-void select_command(int is_show_help, context_table *context, char* arg0);
-void encrypt_command(int is_show_help, context_table *context, char* text, char* cp_arg);
+void homophonic_cipher_encode(char* text);
+void playfair(char ch1, char ch2, char key[5][5]);
+void replace_cipher_encode(char* text);
+void shift_cipher_encode(char* text, char * shift_text);
 
 /* [] END OF FILE */
