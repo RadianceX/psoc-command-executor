@@ -67,7 +67,7 @@ void plahfair_cipher_encode(char* message, char* _key) {
         'Z'
     };
     
-    char t;
+    uint8 t;
     
     // set key
     for (t=0;t<10;t++){
