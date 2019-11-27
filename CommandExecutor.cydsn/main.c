@@ -37,7 +37,7 @@ void main_loop(context_table *context);
 
 // variables
 char is_command_ready = False;
-context_table context = {'1', {0}};
+context_table context = {'0', {0}};
 
 
 // Strongly recommended to follow this pattern

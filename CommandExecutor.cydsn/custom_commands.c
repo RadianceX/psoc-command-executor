@@ -32,7 +32,8 @@ void select_command(int is_show_help, context_table *context, char* arg0){
             "\r\n cp_num:                                       - cipher type",
             "\r\n    1 - shift cipher ; cp_args: (int)shift",
             "\r\n    2 - replace cipher; cp_args: none",
-            "\r\n    3 - homophonic replacement cipher; cp_args: none"
+            "\r\n    3 - homophonic replacement cipher; cp_args: none",
+            "\r\n    4 - plahfair cipher; cp_args: (str)message (str)key"
         ); 
         return;
     }
@@ -59,6 +60,10 @@ void encrypt_command(int is_show_help, context_table *context, char* text, char*
         }
         case '3':{
             homophonic_cipher_encode(text);
+            break;
+        }
+        case '4':{
+            playfair_cipher_encode(text, cp_arg);
             break;
         }
         default:{

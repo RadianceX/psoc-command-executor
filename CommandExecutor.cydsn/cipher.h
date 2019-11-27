@@ -15,7 +15,7 @@
 #endif /* framework.h */
 
 void homophonic_cipher_encode(char* text);
-void playfair(char ch1, char ch2, char key[5][5]);
+void playfair_cipher_encode(char* message, char* _key);
 void replace_cipher_encode(char* text);
 void shift_cipher_encode(char* text, char * shift_text);
 

@@ -8,6 +8,7 @@
 #endif /* cipher.h */
 
 void playfair(char ch1, char ch2, char key[5][5]){
+    if (DEBUG_ENABLED)  { print("\r\nCALL function_name_command, args: ", ch1, ", ", ch2); }
     int i, j, w, x, y, z;
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 5; j++) {
@@ -20,24 +21,29 @@ void playfair(char ch1, char ch2, char key[5][5]){
             }
         }
     }
-    //printf("%d%d %d%d",w,x,y,z);
-    if (w == y) {
+
+    if (w == y){
         x = (x + 1) % 5;
         z = (z + 1) % 5;
-        print(&key[w][x], key[y][z]);
-    } else if (x == z) {
+        UART_PutChar(key[w][x]);
+        UART_PutChar(key[y][z]);
+    }
+    else if (x == z){
         w = (w + 1) % 5;
         y = (y + 1) % 5;
-        print(&key[w][x], key[y][z]);
-    } else {
-        print(&key[w][z], key[y][x]);  
-    } 
+        UART_PutChar(key[w][x]);
+        UART_PutChar(key[y][z]);
+    }
+    else{
+        UART_PutChar(key[w][z]);
+        UART_PutChar(key[y][x]);
+    }
 }
-void plahfair_cipher_encode(char* message, char* _key) {
+
+void playfair_cipher_encode(char* message, char* _key){
+    if (DEBUG_ENABLED)  { print("\r\nCALL function_name_command, args: ", message, ", ", _key); }
     uint8 i, j, k = 0, m = 0, n;
-    char key[5][5], keyminus[25], keystr[10], str[25] = {
-        0
-    };
+    char key[5][5], keyminus[25], keystr[10], str[25] = {'\0'};
     char alpa[26] = {
         'A',
         'B',
@@ -66,7 +72,6 @@ void plahfair_cipher_encode(char* message, char* _key) {
         'Y',
         'Z'
     };
-    
     uint8 t;
     
     // set key
@@ -78,8 +83,18 @@ void plahfair_cipher_encode(char* message, char* _key) {
             keystr[t] = '\0';
         }
     }
+    // clear key from duplicate characters
+    for(i=0;i<strlen(keystr);i++){
+  		for(j=i+1;keystr[j] != '\0';j++){
+  			if(keystr[j] == keystr[i]){
+  				for(k=j;keystr[k] != '\0';k++){
+					keystr[k] = keystr[k + 1];
+				}
+ 			}
+		}
+	}
     // set message
-    for (t=0; t<25;t++){
+    for (t=0;t<25;t++){
         if (t < strlen(message)){
             str[t] = message[t];
         }
@@ -95,7 +110,7 @@ void plahfair_cipher_encode(char* message, char* _key) {
         else if (keystr[i] == 'J') keystr[i] = 'I';
         keystr[i] = toupper(keystr[i]);
     }
-    //convert all the characters of plaintext to uppertext
+    //convert all the characters of message to uppercase
     for (i = 0; i < strlen(str); i++) {
         if (str[i] == 'j') str[i] = 'i';
         else if (str[i] == 'J') str[i] = 'I';
@@ -113,8 +128,11 @@ void plahfair_cipher_encode(char* message, char* _key) {
             j++;
         }
     }
+    
     //construct key keymatrix
     k = 0;
+    m = 0;
+    print("Encrypt table: \r\n");
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 5; j++) {
             if (k < n) {
@@ -124,12 +142,13 @@ void plahfair_cipher_encode(char* message, char* _key) {
                 key[i][j] = keyminus[m];
                 m++;
             }
-            print(&key[i][j], NULL);
+            UART_PutChar(key[i][j]);
+            UART_PutChar(' ');
         }
-        print("\n", NULL);
+        print("\r\n");
     }
     // construct diagram and convert to cipher text
-    print("\n\nEntered text : ", str, "\nCipher Text :", NULL);
+    print("\r\nEntered text: ", str, "\r\nCiphered text: ");
     for (i = 0; i < strlen(str); i++) {
         if (str[i] == 'J') str[i] = 'I';
         if (str[i + 1] == '\0') playfair(str[i], 'X', key);
