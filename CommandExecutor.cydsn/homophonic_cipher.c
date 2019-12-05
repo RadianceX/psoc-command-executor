@@ -20,7 +20,7 @@
 #endif /* cipher.h */
 
 void homophonic_cipher_encode(char* text){
-    if (DEBUG_ENABLED)  { print("\r\nCALL homophonic_cipher_encode, args: ", text); }
+    if (DEBUG_ENABLED)  { print("CALL homophonic_cipher_encode, args: ", text); }
 
     uint16 i;
     int encrypted_text[COMMAND_LEN];
@@ -58,8 +58,8 @@ void homophonic_cipher_encode(char* text){
     }
 
     char buff[4];
-    print("\r\nInput message:    ", text);
-    print("\r\nCiphered message: ");
+    print("Input message:    ", text);
+    print("Ciphered message: ");
     for (i=0; i<strlen(text); i++){
         UART_PutString(itoa(encrypted_text[i], buff, 10));
         UART_PutChar(' ');

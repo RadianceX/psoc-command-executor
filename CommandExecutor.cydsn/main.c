@@ -42,8 +42,8 @@ context_table context = {'0', {0}};
 
 // Strongly recommended to follow this pattern
 void function_name_command(int is_show_help, char* arg0, char* arg1, ...){
-    if (DEBUG_ENABLED)  { print("\r\nCALL function_name_command, args: ", arg0, ", ", arg1); }
-    if (is_show_help==1){ print("\r\ndetailed info about function"); return; }
+    if (DEBUG_ENABLED)  { print("CALL function_name_command, args: ", arg0, ", ", arg1); }
+    if (is_show_help==1){ print("detailed info about function"); return; }
 
     /* Function code */
 }
@@ -54,12 +54,10 @@ int main(void){
     isr_UART_StartEx(UARTIsrHandler);
 
     help();
-    UART_PutString("\r\n>");
+    print(">");
 
-    for(;;)
-    {
-        if (is_command_ready == True)
-        {
+    for(;;){
+        if (is_command_ready == True){
             execute(&context);
             is_command_ready = False;
         }
@@ -86,17 +84,18 @@ void execute(context_table* context){
         encrypt_command(0, context, arg0, arg1);
     }
     else{
-        print("\r\nInvalid command");
+        print("Invalid command");
     }
-    print("\r\n>");
+    print(">");
 }
 
 void help(void){
-    if (DEBUG_ENABLED){  print("\r\nCALL help_command, args: "); }
-    
-    print("\r\n Available commands:");
+    if (DEBUG_ENABLED){  print("CALL help_command, args: "); }
+    print("");
+    print(" Available commands:");
     select_command(1, NULL, NULL);
     encrypt_command(1, NULL, NULL, NULL);
+    print("");
 }
 
 CY_ISR(UARTIsrHandler){
@@ -111,7 +110,7 @@ CY_ISR(UARTIsrHandler){
     }
     else if (context.command[data_count] == '\b'){
         if (data_count != 0){
-                data_count -= 1;
+            data_count -= 1;
         }
     }
     else{

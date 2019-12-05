@@ -19,9 +19,9 @@
 #endif /* cipher.h */
 
 void shift_cipher_encode(char* text, char * shift_text){
-    if (DEBUG_ENABLED){ print("\r\nCALL shift_cipher_encode, args:", text,", ", shift_text); }
+    if (DEBUG_ENABLED){ print("CALL shift_cipher_encode, args:", text,", ", shift_text); }
     
-    print("\r\nInput message:    ", text);
+    print("Input message:    ", text);
     
     int len = strlen(text);
 
@@ -66,7 +66,7 @@ void shift_cipher_encode(char* text, char * shift_text){
         }
     }
     
-    print("\r\nCiphered message: ", text);
+    print("Ciphered message: ", text);
 }
 
 /* [] END OF FILE */

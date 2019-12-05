@@ -18,7 +18,7 @@
 #include "cipher.h"
 #endif /* cipher.h */
 void replace_cipher_encode(char* text){
-    if (DEBUG_ENABLED){ print("\r\nCALL replace_cipher_encode, args:", text); }
+    if (DEBUG_ENABLED){ print("CALL replace_cipher_encode, args:", text); }
     char c_alphabet[] = {
         'r', 's', 'A', '7', 'g', 'p', 'U', 'S', 'c',
         'D', 'y', 'n', 'T', '4', 'u', 'w', 'X', 'd', 'e', 
@@ -30,7 +30,7 @@ void replace_cipher_encode(char* text){
     char value;
     uint8 i;
     
-    print("\r\nInput message:    ", text);
+    print("Input message:    ", text);
     
     for (i=0;i<strlen(text);i++){
         value = text[i];
@@ -48,7 +48,7 @@ void replace_cipher_encode(char* text){
         }
     }
 
-    print("\r\nCiphered message: ", text);
+    print("Ciphered message: ", text);
 }
 
 /* [] END OF FILE */

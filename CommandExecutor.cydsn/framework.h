@@ -23,7 +23,7 @@
 
 #define COMMAND_LEN 32
 
-#define print(...) fprint(__VA_ARGS__, 0)
+#define print(...) fprint("\r\n",__VA_ARGS__, 0)
 
 typedef struct {
     char cipher;

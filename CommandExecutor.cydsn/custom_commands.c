@@ -24,7 +24,7 @@
 
 void select_command(int is_show_help, context_table *context, char* arg0){
     if (DEBUG_ENABLED)  { 
-        print("\r\nCALL select_command, arg:", arg0);
+        print("CALL select_command, arg:", arg0);
     }
     if (is_show_help==1){ 
         print(
@@ -43,14 +43,14 @@ void select_command(int is_show_help, context_table *context, char* arg0){
 }
 
 void encrypt_command(int is_show_help, context_table *context, char* text, char* cp_arg){
-    if (DEBUG_ENABLED)  { print("\r\nCALL encrypt_command args: ", text, ", ", cp_arg); }
+    if (DEBUG_ENABLED)  { print("CALL encrypt_command args: ", text, ", ", cp_arg); }
     if (is_show_help==1){ 
         print(
             "\r\n encrypt (string)text (args)cp_args            - encrypt text by selected cipher"
         );
         return; 
     }
-    print("\r\n");
+    print("");
     switch(context->cipher){
         case '1':{
             shift_cipher_encode(text, cp_arg);
@@ -77,10 +77,10 @@ void encrypt_command(int is_show_help, context_table *context, char* text, char*
             break;
         }   
         default:{
-            print("\r\nInvalid cipher");
+            print("Invalid cipher");
         }
     }
-    print("\r\n");
+    print("");
 }
 
 /* [] END OF FILE */

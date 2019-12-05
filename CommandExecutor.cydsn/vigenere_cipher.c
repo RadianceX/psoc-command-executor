@@ -30,12 +30,12 @@ void vigenere_encode(char* text, char* _key){
         }
     }
     str[j]='\0';
-    print("\r\nInput message:    ", str);
+    print("Input message:    ", str);
     //Storing string in terms of ascii
     for(i=0;i<strlen(text);i++){
         numstr[i]=str[i]-'A';
     }
-    print("\r\nKey:              ", _key);
+    print("Key:              ", _key);
     //converting entered key to Capital letters
     for(i=0,j=0;i<strlen(_key);i++){
         if(key[i]!=' '){
@@ -58,7 +58,7 @@ void vigenere_encode(char* text, char* _key){
         }
     }
  
-    print("\r\nCiphered message: ");   
+    print("Ciphered message: ");   
     for(i=0;i<strlen(str);i++)
     {
         UART_PutChar(numcipher[i]+'A'); 

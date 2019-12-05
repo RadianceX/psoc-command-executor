@@ -8,7 +8,7 @@
 #endif /* cipher.h */
 
 void playfair(char ch1, char ch2, char key[5][5]){
-    if (DEBUG_ENABLED)  { print("\r\nCALL function_name_command, args: ", ch1, ", ", ch2); }
+    if (DEBUG_ENABLED)  { print("CALL function_name_command, args: ", ch1, ", ", ch2); }
     int i, j, w, x, y, z;
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 5; j++) {
@@ -41,7 +41,7 @@ void playfair(char ch1, char ch2, char key[5][5]){
 }
 
 void playfair_cipher_encode(char* message, char* _key){
-    if (DEBUG_ENABLED)  { print("\r\nCALL function_name_command, args: ", message, ", ", _key); }
+    if (DEBUG_ENABLED)  { print("CALL function_name_command, args: ", message, ", ", _key); }
     uint8 i, j, k = 0, m = 0, n;
     char key[5][5], keyminus[25], keystr[10], str[25] = {'\0'};
     char alpa[26] = {
@@ -132,7 +132,7 @@ void playfair_cipher_encode(char* message, char* _key){
     //construct key keymatrix
     k = 0;
     m = 0;
-    print("\r\nEncrypt table: \r\n");
+    print("Encrypt table: \r\n");
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 5; j++) {
             if (k < n) {
@@ -145,11 +145,11 @@ void playfair_cipher_encode(char* message, char* _key){
             UART_PutChar(key[i][j]);
             UART_PutChar(' ');
         }
-        print("\r\n");
+        print("");
     }
     // construct diagram and convert to cipher text
-    print("\r\nInput message:    ", str);
-    print("\r\nCiphered message: ");
+    print("Input message:    ", str);
+    print("Ciphered message: ");
     for (i = 0; i < strlen(str); i++) {
         if (str[i] == 'J') str[i] = 'I';
         if (str[i + 1] == '\0') playfair(str[i], 'X', key);

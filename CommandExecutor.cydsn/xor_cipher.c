@@ -20,7 +20,7 @@
 
 
 void xor_cipher_encode(char* message){
-    if (DEBUG_ENABLED){ print("\r\nCALL xor_cipher_encode, args:", message, "\r\n"); }
+    if (DEBUG_ENABLED){ print("CALL xor_cipher_encode, args:", message, "\r\n"); }
     char ciphered_message[COMMAND_LEN] = {'\0'};
     
     int key [] = {'k','e','y'};
@@ -32,11 +32,11 @@ void xor_cipher_encode(char* message){
         k = k + 1;
     }
     
-    print("\r\nCiphered message: ");
+    print("Ciphered message: ");
     for(int i = 0; i < strlen(message); i++){
         UART_PutChar(ciphered_message[i]);
     }
-    print("\r\n");
+    print("");
 }
 
 /* [] END OF FILE */
