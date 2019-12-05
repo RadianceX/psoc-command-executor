@@ -68,7 +68,6 @@ int main(void){
 }
 
 void execute(context_table* context){
-    UART_PutString("\r\n");
     
     char tmp[COMMAND_LEN];
     strcpy(tmp, context->command);
@@ -87,16 +86,13 @@ void execute(context_table* context){
         encrypt_command(0, context, arg0, arg1);
     }
     else{
-        print("Invalid command");
+        print("\r\nInvalid command");
     }
-    
-    UART_PutString("\r\n>");
+    print("\r\n>");
 }
 
 void help(void){
-    if (DEBUG_ENABLED){ 
-        print("CALL help_command, args: "); 
-    }
+    if (DEBUG_ENABLED){  print("\r\nCALL help_command, args: "); }
     
     print("\r\n Available commands:");
     select_command(1, NULL, NULL);

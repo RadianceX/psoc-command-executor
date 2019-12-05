@@ -132,7 +132,7 @@ void playfair_cipher_encode(char* message, char* _key){
     //construct key keymatrix
     k = 0;
     m = 0;
-    print("Encrypt table: \r\n");
+    print("\r\nEncrypt table: \r\n");
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 5; j++) {
             if (k < n) {
@@ -148,7 +148,8 @@ void playfair_cipher_encode(char* message, char* _key){
         print("\r\n");
     }
     // construct diagram and convert to cipher text
-    print("\r\nEntered text: ", str, "\r\nCiphered text: ");
+    print("\r\nInput message:    ", str);
+    print("\r\nCiphered message: ");
     for (i = 0; i < strlen(str); i++) {
         if (str[i] == 'J') str[i] = 'I';
         if (str[i + 1] == '\0') playfair(str[i], 'X', key);

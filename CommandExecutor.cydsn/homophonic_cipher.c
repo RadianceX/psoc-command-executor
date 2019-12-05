@@ -58,6 +58,8 @@ void homophonic_cipher_encode(char* text){
     }
 
     char buff[4];
+    print("\r\nInput message:    ", text);
+    print("\r\nCiphered message: ");
     for (i=0; i<strlen(text); i++){
         UART_PutString(itoa(encrypted_text[i], buff, 10));
         UART_PutChar(' ');

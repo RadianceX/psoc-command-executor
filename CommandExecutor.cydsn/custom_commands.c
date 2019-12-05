@@ -24,7 +24,7 @@
 
 void select_command(int is_show_help, context_table *context, char* arg0){
     if (DEBUG_ENABLED)  { 
-        print("CALL select_command, arg:", arg0);
+        print("\r\nCALL select_command, arg:", arg0);
     }
     if (is_show_help==1){ 
         print(
@@ -33,7 +33,9 @@ void select_command(int is_show_help, context_table *context, char* arg0){
             "\r\n    1 - shift cipher ; cp_args: (int)shift",
             "\r\n    2 - replace cipher; cp_args: none",
             "\r\n    3 - homophonic replacement cipher; cp_args: none",
-            "\r\n    4 - plahfair cipher; cp_args: (str)message (str)key"
+            "\r\n    4 - playfair cipher; cp_args: (str)message (str)key",
+            "\r\n    5 - vigenere cipher; cp_args: (str)message (str)key",
+            "\r\n    7 - xor cipher; cp_args: (str)message (str)key"
         ); 
         return;
     }
@@ -48,7 +50,7 @@ void encrypt_command(int is_show_help, context_table *context, char* text, char*
         );
         return; 
     }
-    
+    print("\r\n");
     switch(context->cipher){
         case '1':{
             shift_cipher_encode(text, cp_arg);
@@ -66,10 +68,19 @@ void encrypt_command(int is_show_help, context_table *context, char* text, char*
             playfair_cipher_encode(text, cp_arg);
             break;
         }
+        case '5':{
+            vigenere_encode(text, cp_arg);
+            break;
+        }
+        case '7':{
+            xor_cipher_encode(text);
+            break;
+        }   
         default:{
-            print("invalid cipher");
+            print("\r\nInvalid cipher");
         }
     }
+    print("\r\n");
 }
 
 /* [] END OF FILE */

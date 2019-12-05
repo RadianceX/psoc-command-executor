@@ -29,6 +29,9 @@ void replace_cipher_encode(char* text){
         'H', 'k', 'E', 'Z', 'C', 't'};
     char value;
     uint8 i;
+    
+    print("\r\nInput message:    ", text);
+    
     for (i=0;i<strlen(text);i++){
         value = text[i];
         if (value >= 'A' && value <= 'Z'){
@@ -44,7 +47,8 @@ void replace_cipher_encode(char* text){
             text[i] = c_alphabet[(int)value];
         }
     }
-    print(text);
+
+    print("\r\nCiphered message: ", text);
 }
 
 /* [] END OF FILE */

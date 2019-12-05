@@ -21,6 +21,8 @@
 void shift_cipher_encode(char* text, char * shift_text){
     if (DEBUG_ENABLED){ print("\r\nCALL shift_cipher_encode, args:", text,", ", shift_text); }
     
+    print("\r\nInput message:    ", text);
+    
     int len = strlen(text);
 
     char value;
@@ -64,7 +66,7 @@ void shift_cipher_encode(char* text, char * shift_text){
         }
     }
     
-    print(text);
+    print("\r\nCiphered message: ", text);
 }
 
 /* [] END OF FILE */
