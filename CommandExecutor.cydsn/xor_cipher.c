@@ -19,11 +19,31 @@
 #endif /* cipher.h */
 
 
+void printbincharpad(char c){
+    for (int i = 7; i >= 0; --i){
+        UART_PutChar( (c & (1 << i)) ? '1' : '0' );
+    }
+}
+
 void xor_cipher_encode(char* message){
     if (DEBUG_ENABLED){ print("CALL xor_cipher_encode, args:", message, "\r\n"); }
+    uint16 i;
     char ciphered_message[COMMAND_LEN] = {'\0'};
-    
-    int key [] = {'k','e','y'};
+    print("Input message: ", message);
+    print("In binary: ");
+    for (i=0; i<strlen(message); i++){
+        printbincharpad(message[i]);
+        UART_PutChar(' ');
+    }
+    print("");
+    char key [] = {'k','e','y'};
+    print("Key: key");
+    print("In binary: ");
+    for (i=0; i<strlen(message); i++){
+        printbincharpad(key[i%3]);
+        UART_PutChar(' ');
+    }
+    print("");
     uint16 k=0;
        
     for (int i = 0; i <strlen(message); i++) {
@@ -31,12 +51,15 @@ void xor_cipher_encode(char* message){
         ciphered_message[i] = (message[i]^key[k]);
         k = k + 1;
     }
-    
     print("Ciphered message: ");
     for(int i = 0; i < strlen(message); i++){
         UART_PutChar(ciphered_message[i]);
     }
-    print("");
+    print("In binary: ");
+    for (i=0; i<strlen(message); i++){
+        printbincharpad(ciphered_message[i]);
+        UART_PutChar(' ');
+    }
 }
 
 /* [] END OF FILE */
