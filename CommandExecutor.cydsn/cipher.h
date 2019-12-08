@@ -14,11 +14,13 @@
 #include "framework.h"
 #endif /* framework.h */
 
+
 void homophonic_cipher_encode(char* text);
-void playfair_cipher_encode(char* message, char* _key);
+void playfair_cipher_encode(char* text, char* _key);
 void replace_cipher_encode(char* text);
 void shift_cipher_encode(char* text, char * shift_text);
 void vigenere_encode(char* text, char* _key);
-void xor_cipher_encode(char* message);
+void xor_cipher_encode(char* text);
+void transposition_encode(char* text);
 
 /* [] END OF FILE */

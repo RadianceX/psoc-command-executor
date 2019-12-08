@@ -19,6 +19,7 @@
 #endif /* cipher.h */
 
 void vigenere_encode(char* text, char* _key){
+    if (DEBUG_ENABLED){ print("CALL vigenere_encode, args:", text, "\r\n"); }
     int numstr[COMMAND_LEN],numkey[COMMAND_LEN],numcipher[COMMAND_LEN];
     char str[COMMAND_LEN], key[COMMAND_LEN] = {'\0'};
     uint16 i,j;

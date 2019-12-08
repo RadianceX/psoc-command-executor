@@ -28,25 +28,17 @@
 #include "cipher.h"
 #endif /* cipher.h */
 
+
 CY_ISR_PROTO(UARTIsrHandler);
 
-// service block
+/* service block */
 void execute(context_table *context);            // передає аргументи у вибрану функцію
 void help();
 void main_loop(context_table *context);
-
-// variables
+/* variables */
 char is_command_ready = False;
 context_table context = {'0', {0}};
 
-
-// Strongly recommended to follow this pattern
-void function_name_command(int is_show_help, char* arg0, char* arg1, ...){
-    if (DEBUG_ENABLED)  { print("CALL function_name_command, args: ", arg0, ", ", arg1); }
-    if (is_show_help==1){ print("detailed info about function"); return; }
-
-    /* Function code */
-}
 
 int main(void){
     CyGlobalIntEnable;
@@ -100,9 +92,10 @@ void help(void){
 
 CY_ISR(UARTIsrHandler){
     volatile static uint16 data_count = 0;
-    
+
     context.command[data_count] = UART_GetChar();
     UART_PutChar(context.command[data_count]);
+
     if (context.command[data_count] == '\r'){
         is_command_ready = True;
         fill_buffer_tail(context.command, COMMAND_LEN, data_count);

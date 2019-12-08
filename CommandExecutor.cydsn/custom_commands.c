@@ -22,6 +22,7 @@
 #include "cipher.h"
 #endif /* cipher.h */
 
+
 void select_command(int is_show_help, context_table *context, char* arg0){
     if (DEBUG_ENABLED)  { 
         print("CALL select_command, arg:", arg0);
@@ -35,6 +36,7 @@ void select_command(int is_show_help, context_table *context, char* arg0){
             "\r\n    3 - homophonic replacement cipher; cp_args: none",
             "\r\n    4 - playfair cipher; cp_args: (str)message (str)key",
             "\r\n    5 - vigenere cipher; cp_args: (str)message (str)key",
+            "\r\n    6 - transposition cipher; cp_args: (str)message (str)key",
             "\r\n    7 - xor cipher; cp_args: (str)message (str)key"
         ); 
         return;
@@ -70,6 +72,10 @@ void encrypt_command(int is_show_help, context_table *context, char* text, char*
         }
         case '5':{
             vigenere_encode(text, cp_arg);
+            break;
+        }
+        case '6':{
+            transposition_encode(text);
             break;
         }
         case '7':{
